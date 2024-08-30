@@ -342,6 +342,71 @@ bool CServer::SetClientNameImpl(int ClientId, const char *pNameRequest, bool Set
 	char aNameTry[MAX_NAME_LENGTH];
 	str_copy(aNameTry, aTrimmedName);
 
+	// reserved names
+	if(Config()->m_NameReservEnable)
+	{
+		if(Config()->m_NameReservEnable1 &&
+			str_comp_nocase(Config()->m_NameReserved1, aNameTry) == 0 &&
+			str_comp(Config()->m_NameReservedPass1, m_aClients[ClientId].m_aPassword) != 0)
+		{
+			// auto rename
+			for(int i = 1;; i++)
+			{
+				str_format(aNameTry, sizeof(aNameTry), "(%d)%s", i, aTrimmedName);
+				if(IsClientNameAvailable(ClientId, aNameTry))
+					break;
+			}
+		}
+		if(Config()->m_NameReservEnable2 &&
+			str_comp_nocase(Config()->m_NameReserved2, aNameTry) == 0 &&
+			str_comp(Config()->m_NameReservedPass2, m_aClients[ClientId].m_aPassword) != 0)
+		{
+			// auto rename
+			for(int i = 1;; i++)
+			{
+				str_format(aNameTry, sizeof(aNameTry), "(%d)%s", i, aTrimmedName);
+				if(IsClientNameAvailable(ClientId, aNameTry))
+					break;
+			}
+		}
+		if(Config()->m_NameReservEnable3 &&
+			str_comp_nocase(Config()->m_NameReserved3, aNameTry) == 0 &&
+			str_comp(Config()->m_NameReservedPass3, m_aClients[ClientId].m_aPassword) != 0)
+		{
+			// auto rename
+			for(int i = 1;; i++)
+			{
+				str_format(aNameTry, sizeof(aNameTry), "(%d)%s", i, aTrimmedName);
+				if(IsClientNameAvailable(ClientId, aNameTry))
+					break;
+			}
+		}
+		if(Config()->m_NameReservEnable4 &&
+			str_comp_nocase(Config()->m_NameReserved4, aNameTry) == 0 &&
+			str_comp(Config()->m_NameReservedPass4, m_aClients[ClientId].m_aPassword) != 0)
+		{
+			// auto rename
+			for(int i = 1;; i++)
+			{
+				str_format(aNameTry, sizeof(aNameTry), "(%d)%s", i, aTrimmedName);
+				if(IsClientNameAvailable(ClientId, aNameTry))
+					break;
+			}
+		}
+		if(Config()->m_NameReservEnable5 &&
+			str_comp_nocase(Config()->m_NameReserved5, aNameTry) == 0 &&
+			str_comp(Config()->m_NameReservedPass5, m_aClients[ClientId].m_aPassword) != 0)
+		{
+			// auto rename
+			for(int i = 1;; i++)
+			{
+				str_format(aNameTry, sizeof(aNameTry), "(%d)%s", i, aTrimmedName);
+				if(IsClientNameAvailable(ClientId, aNameTry))
+					break;
+			}
+		}
+	}
+
 	if(!IsClientNameAvailable(ClientId, aNameTry))
 	{
 		// auto rename
@@ -521,6 +586,7 @@ int CServer::Init()
 	{
 		Client.m_State = CClient::STATE_EMPTY;
 		Client.m_aName[0] = 0;
+		Client.m_aPassword[0] = 0;
 		Client.m_aClan[0] = 0;
 		Client.m_Country = -1;
 		Client.m_Snapshots.Init();
@@ -1158,6 +1224,7 @@ int CServer::DelClientCallback(int ClientId, const char *pReason, void *pUser)
 
 	pThis->m_aClients[ClientId].m_State = CClient::STATE_EMPTY;
 	pThis->m_aClients[ClientId].m_aName[0] = 0;
+	pThis->m_aClients[ClientId].m_aPassword[0] = 0;
 	pThis->m_aClients[ClientId].m_aClan[0] = 0;
 	pThis->m_aClients[ClientId].m_Country = -1;
 	pThis->m_aClients[ClientId].m_Authed = AUTHED_NO;
@@ -1535,6 +1602,7 @@ void CServer::ProcessClientPacket(CNetChunk *pPacket)
 				}
 
 				m_aClients[ClientId].m_State = CClient::STATE_CONNECTING;
+				str_copy(m_aClients[ClientId].m_aPassword, pPassword, 256);
 				SendRconType(ClientId, m_AuthManager.NumNonDefaultKeys() > 0);
 				SendCapabilities(ClientId);
 				SendMap(ClientId);

@@ -727,3 +727,26 @@ MACRO_CONFIG_INT(ClVideoRecorderFPS, cl_video_recorder_fps, 60, 1, 1000, CFGFLAG
 /*
  * Add config variables for mods below this comment to avoid merge conflicts.
  */
+
+// god forgive me
+MACRO_CONFIG_INT(NameReservEnable, name_reserv_enable, 1, 0, 1, CFGFLAG_SERVER | CFGFLAG_GAME, "Enable name reservation for all entries")
+
+MACRO_CONFIG_INT(NameReservEnable1, name_reserv_1_enable, 0, 0, 1, CFGFLAG_SERVER | CFGFLAG_GAME, "Enable name #1 reservation")
+MACRO_CONFIG_STR(NameReserved1, name_reserv_1, 128, "", CFGFLAG_SERVER | CFGFLAG_GAME, "Reserved name #1")
+MACRO_CONFIG_STR(NameReservedPass1, name_reserv_pass_1, 128, "", CFGFLAG_SERVER | CFGFLAG_GAME, "Password for reserved name #1")
+
+MACRO_CONFIG_INT(NameReservEnable2, name_reserv_2_enable, 0, 0, 1, CFGFLAG_SERVER | CFGFLAG_GAME, "Enable name #2 reservation")
+MACRO_CONFIG_STR(NameReserved2, name_reserv_2, 128, "", CFGFLAG_SERVER | CFGFLAG_GAME, "Reserved name #2")
+MACRO_CONFIG_STR(NameReservedPass2, name_reserv_pass_2, 128, "", CFGFLAG_SERVER | CFGFLAG_GAME, "Password for reserved name #2")
+
+MACRO_CONFIG_INT(NameReservEnable3, name_reserv_3_enable, 0, 0, 1, CFGFLAG_SERVER | CFGFLAG_GAME, "Enable name #3 reservation")
+MACRO_CONFIG_STR(NameReserved3, name_reserv_3, 128, "", CFGFLAG_SERVER | CFGFLAG_GAME, "Reserved name #3")
+MACRO_CONFIG_STR(NameReservedPass3, name_reserv_pass_3, 128, "", CFGFLAG_SERVER | CFGFLAG_GAME, "Password for reserved name #3")
+
+MACRO_CONFIG_INT(NameReservEnable4, name_reserv_4_enable, 0, 0, 1, CFGFLAG_SERVER | CFGFLAG_GAME, "Enable name #4 reservation")
+MACRO_CONFIG_STR(NameReserved4, name_reserv_4, 128, "", CFGFLAG_SERVER | CFGFLAG_GAME, "Reserved name #4")
+MACRO_CONFIG_STR(NameReservedPass4, name_reserv_pass_4, 128, "", CFGFLAG_SERVER | CFGFLAG_GAME, "Password for reserved name #4")
+
+MACRO_CONFIG_INT(NameReservEnable5, name_reserv_5_enable, 0, 0, 1, CFGFLAG_SERVER | CFGFLAG_GAME, "Enable name #5 reservation")
+MACRO_CONFIG_STR(NameReserved5, name_reserv_5, 128, "", CFGFLAG_SERVER | CFGFLAG_GAME, "Reserved name #5")
+MACRO_CONFIG_STR(NameReservedPass5, name_reserv_pass_5, 128, "", CFGFLAG_SERVER | CFGFLAG_GAME, "Password for reserved name #5")

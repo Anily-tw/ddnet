@@ -163,6 +163,8 @@ public:
 		bool m_ShowIps;
 		bool m_DebugDummy;
 
+		char m_aPassword[256];
+
 		const IConsole::CCommandInfo *m_pRconCmdToSend;
 
 		bool m_HasPersistentData;
