@@ -2462,6 +2462,7 @@ if(CLIENT)
     editor_trackers.cpp
     editor_trackers.h
     editor_ui.h
+    enums.h
     explanations.cpp
     layer_selector.cpp
     layer_selector.h
@@ -2929,6 +2930,7 @@ if(GTEST_FOUND OR DOWNLOAD_GTEST)
     compression.cpp
     csv.cpp
     datafile.cpp
+    editor.cpp
     fs.cpp
     git_revision.cpp
     hash.cpp

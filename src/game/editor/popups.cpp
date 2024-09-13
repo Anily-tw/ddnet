@@ -68,17 +68,9 @@ CUi::EPopupMenuFunctionResult CEditor::PopupMenuFile(void *pContext, CUIRect Vie
 
 	View.HSplitTop(2.0f, nullptr, &View);
 	View.HSplitTop(12.0f, &Slot, &View);
-	if(pEditor->DoButton_MenuItem(&s_OpenCurrentMapButton, "Load Current Map", 0, &Slot, 0, "Opens the current in game map for editing (ctrl+alt+l)"))
+	if(pEditor->DoButton_MenuItem(&s_OpenCurrentMapButton, pEditor->m_QuickActionLoadCurrentMap.Label(), 0, &Slot, 0, pEditor->m_QuickActionLoadCurrentMap.Description()))
 	{
-		if(pEditor->HasUnsavedData())
-		{
-			pEditor->m_PopupEventType = POPEVENT_LOADCURRENT;
-			pEditor->m_PopupEventActivated = true;
-		}
-		else
-		{
-			pEditor->LoadCurrentMap();
-		}
+		pEditor->m_QuickActionLoadCurrentMap.Call();
 		return CUi::POPUP_CLOSE_CURRENT;
 	}
 
@@ -314,20 +306,20 @@ CUi::EPopupMenuFunctionResult CEditor::PopupMenuSettings(void *pContext, CUIRect
 		static int s_ButtonOff = 0;
 		static int s_ButtonDec = 0;
 		static int s_ButtonHex = 0;
-		if(pEditor->DoButton_Ex(&s_ButtonOff, "Off", pEditor->m_ShowTileInfo == SHOW_TILE_OFF, &Off, 0, "Do not show tile information", IGraphics::CORNER_L))
+		CQuickAction *pAction = &pEditor->m_QuickActionShowInfoOff;
+		if(pEditor->DoButton_Ex(&s_ButtonOff, pAction->LabelShort(), pAction->Active(), &Off, 0, pAction->Description(), IGraphics::CORNER_L))
 		{
-			pEditor->m_ShowTileInfo = SHOW_TILE_OFF;
-			pEditor->m_ShowEnvelopePreview = SHOWENV_NONE;
+			pAction->Call();
 		}
-		if(pEditor->DoButton_Ex(&s_ButtonDec, "Dec", pEditor->m_ShowTileInfo == SHOW_TILE_DECIMAL, &Dec, 0, "[ctrl+i] Show tile information", IGraphics::CORNER_NONE))
+		pAction = &pEditor->m_QuickActionShowInfoDec;
+		if(pEditor->DoButton_Ex(&s_ButtonDec, pAction->LabelShort(), pAction->Active(), &Dec, 0, pAction->Description(), IGraphics::CORNER_NONE))
 		{
-			pEditor->m_ShowTileInfo = SHOW_TILE_DECIMAL;
-			pEditor->m_ShowEnvelopePreview = SHOWENV_NONE;
+			pAction->Call();
 		}
-		if(pEditor->DoButton_Ex(&s_ButtonHex, "Hex", pEditor->m_ShowTileInfo == SHOW_TILE_HEXADECIMAL, &Hex, 0, "[ctrl+shift+i] Show tile information in hexadecimal", IGraphics::CORNER_R))
+		pAction = &pEditor->m_QuickActionShowInfoHex;
+		if(pEditor->DoButton_Ex(&s_ButtonHex, pAction->LabelShort(), pAction->Active(), &Hex, 0, pAction->Description(), IGraphics::CORNER_R))
 		{
-			pEditor->m_ShowTileInfo = SHOW_TILE_HEXADECIMAL;
-			pEditor->m_ShowEnvelopePreview = SHOWENV_NONE;
+			pAction->Call();
 		}
 	}
 
@@ -376,6 +368,30 @@ CUi::EPopupMenuFunctionResult CEditor::PopupMenuSettings(void *pContext, CUIRect
 		if(pEditor->DoButton_Ex(&s_ButtonYes, "Yes", g_Config.m_EdShowQuadsRect, &Yes, 0, "Show quad bounds when moving quads", IGraphics::CORNER_R))
 		{
 			g_Config.m_EdShowQuadsRect = true;
+		}
+	}
+
+	View.HSplitTop(2.0f, nullptr, &View);
+	View.HSplitTop(12.0f, &Slot, &View);
+	{
+		Slot.VMargin(5.0f, &Slot);
+
+		CUIRect Label, Selector;
+		Slot.VSplitMid(&Label, &Selector);
+		CUIRect No, Yes;
+		Selector.VSplitMid(&No, &Yes);
+
+		pEditor->Ui()->DoLabel(&Label, "Auto map reload", 10.0f, TEXTALIGN_ML);
+
+		static int s_ButtonNo = 0;
+		static int s_ButtonYes = 0;
+		if(pEditor->DoButton_Ex(&s_ButtonNo, "No", !g_Config.m_EdAutoMapReload, &No, 0, "Do not run 'hot_reload' on the local server while rcon authed on map save", IGraphics::CORNER_L))
+		{
+			g_Config.m_EdAutoMapReload = false;
+		}
+		if(pEditor->DoButton_Ex(&s_ButtonYes, "Yes", g_Config.m_EdAutoMapReload, &Yes, 0, "Run 'hot_reload' on the local server while rcon authed on map save", IGraphics::CORNER_R))
+		{
+			g_Config.m_EdAutoMapReload = true;
 		}
 	}
 
