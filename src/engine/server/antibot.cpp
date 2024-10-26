@@ -35,9 +35,11 @@ void CAntibot::Log(const char *pMessage, void *pUser)
 }
 void CAntibot::Report(int ClientId, const char *pMessage, void *pUser)
 {
+	CAntibot *pAntibot = (CAntibot *)pUser;
 	char aBuf[256];
 	str_format(aBuf, sizeof(aBuf), "%d: %s", ClientId, pMessage);
 	Log(aBuf, pUser);
+	pAntibot->Server()->Ban(ClientId, 86400, pMessage, true);
 }
 void CAntibot::Send(int ClientId, const void *pData, int Size, int Flags, void *pUser)
 {
